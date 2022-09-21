@@ -4,6 +4,10 @@ const createExpenseType = async (req, res) => {
   try {
     const { name, color } = req.body;
 
+    if (!name || !color) {
+      res.json({ msj: "Te falto enviar algun campo" });
+    }
+
     const newExpenseType = new ExpenseType({
       name,
       color,
@@ -15,13 +19,17 @@ const createExpenseType = async (req, res) => {
       expenseType: newExpenseType,
     });
   } catch (e) {
-    res.send("Ocurrio un Error", e);
+    res.json({ msj: "Ocurrio un error", error });
   }
 };
 
 const getExpenseTypes = async (req, res) => {
-  const expenseTypes = await ExpenseType.find();
-  res.json({ expenseTypes });
+  try {
+    const expenseTypes = await ExpenseType.find();
+    res.json({ expenseTypes });
+  } catch (error) {
+    res.json({ msj: "Ocurrio un error", error });
+  }
 };
 
 module.exports = {
