@@ -8,7 +8,7 @@ const login = async (req, res) => {
 
     User.findOne({ email }).then((user) => {
       if (!user) {
-        return res.json({ mensaje: "Usuario no encontrado" });
+        return res.json({ msj: "Usuario no encontrado" });
       }
 
       bcrypt.compare(password, user.password).then((isCorrect) => {

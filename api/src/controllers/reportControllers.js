@@ -23,7 +23,7 @@ const createReport = async (req, res) => {
 
     await newReport.save();
     res.json({ msj: "Reporte creado correctamente", user: newReport });
-  } catch (e) {
+  } catch (error) {
     res.json({ msj: "Ocurrio un error", error });
   }
 };
