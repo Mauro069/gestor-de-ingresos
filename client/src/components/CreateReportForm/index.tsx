@@ -44,12 +44,12 @@ export const CreateReportForm = ({ getReports }: Props) => {
 
   return (
     <Formik
-      initialValues={initialValues}
+     initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={validations}
     >
       {(formik) => (
-        <Form noValidate>
+        <Form noValidate className={styles.form}>
           <h1>Crear reporte</h1>
           <div className={styles.inputs}>
             <Input label="Mes" name="month" type="text" placeholder="Mes..." />
