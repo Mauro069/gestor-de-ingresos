@@ -8,6 +8,12 @@ const createUser = async (req, res) => {
       res.json({ msj: "Te falto enviar algun campo" });
     }
 
+    const isExist = await User.findOne({ email });
+
+    if (isExist) {
+      res.json({ msj: "Ya existe un usuario con ese correo" });
+    }
+
     const newUser = new User({
       email,
       password,

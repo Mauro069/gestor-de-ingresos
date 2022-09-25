@@ -1,0 +1,12 @@
+.reportCard {
+    background-color: rgb(216, 216, 216);
+    border: 1px solid rgb(197, 197, 197);
+    padding: 1rem;
+    width: 200px;
+    text-transform: capitalize;
+    border-radius: .5rem;
+
+    span {
+        font-weight: bold;
+    }
+}
