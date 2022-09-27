@@ -1,6 +1,9 @@
 const { Router } = require("express");
-const { login, register } = require("../controllers/authControllers");
-
+const {
+  login,
+  register,
+  verify,
+} = require("../controllers/authControllers");
 const {
   getExpenses,
   createExpense,
@@ -22,21 +25,23 @@ const {
   createUser,
   getUserById,
 } = require("../controllers/usersControllers");
+const verifyToken = require("../middlewares/verifyToken");
 
 const router = Router();
 
 /* Auth */
 router.route("/auth/login").post(login);
 router.route("/auth/register").post(register);
+router.route("/auth/verify").get(verify);
 
 /* Users */
 router.route("/users").get(getUsers).post(createUser);
 router.route("/users/:userId").get(getUserById);
 
 /* Reports */
-router.route("/reports").get(getReports).post(createReport);
+router.route("/reports").get(verifyToken, getReports).post(createReport);
 router.route("/reports/:reportId").get(getReportById);
-router.route("/reports/user/:userId").get(getReportsByUserId);
+router.get("/reports/user/:userId", verifyToken, getReportsByUserId);
 
 /* Expense Types */
 router.route("/expense-types").get(getExpenseTypes).post(createExpenseType);

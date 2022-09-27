@@ -1,12 +1,18 @@
 .reportCard {
-    background-color: rgb(216, 216, 216);
-    border: 1px solid rgb(197, 197, 197);
-    padding: 1rem;
-    width: 200px;
-    text-transform: capitalize;
-    border-radius: .5rem;
+  background-color: rgb(216, 216, 216);
+  border: 1px solid rgb(197, 197, 197);
+  padding: 1rem;
+  width: 200px;
+  text-transform: capitalize;
+  border-radius: 0.5rem;
+  cursor: pointer;
 
-    span {
-        font-weight: bold;
-    }
+  span {
+    font-weight: bold;
+  }
+}
+
+.reportCard:hover {
+  transition-duration: 0.3s;
+  transform: scale((1.1));
 }

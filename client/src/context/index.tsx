@@ -1,3 +1,4 @@
+import { AuthProvider } from "./AuthContext";
 import { NotificationProvider } from "./NotificationContext";
 
 interface StateProviderProps {
@@ -5,7 +6,11 @@ interface StateProviderProps {
 }
 
 const StateProvider = ({ children }: StateProviderProps) => {
-  return <NotificationProvider>{children}</NotificationProvider>;
+  return (
+    <AuthProvider>
+      <NotificationProvider>{children}</NotificationProvider>
+    </AuthProvider>
+  );
 };
 
 export default StateProvider;

@@ -1,3 +1,4 @@
+const { isValidObjectId } = require("mongoose");
 const User = require("../models/UserSchema");
 
 const createUser = async (req, res) => {
@@ -21,7 +22,7 @@ const createUser = async (req, res) => {
 
     await newUser.save();
     res.json({ msj: "Usuario creado correctamente", user: newUser });
-  } catch (e) {
+  } catch (error) {
     res.json({ msj: "Ocurrio un error", error });
   }
 };

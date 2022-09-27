@@ -69,4 +69,27 @@ const register = async (req, res) => {
   });
 };
 
-module.exports = { login, register };
+const verify = async (req, res) => {
+  const token = req.headers["token"];
+
+  if (token) {
+    jwt.verify(token, "secreto", (error, data) => {
+      if (error) return res.status(400).json({ msj: "Token invalido" });
+      else {
+        const token = jwt.sign({ data: data?.data }, "secreto", {
+          expiresIn: 86400 /* 24hs */,
+        });
+
+        res.json({
+          msj: "Token valido",
+          token,
+          user: { _id: data?.data?._id, email: data?.data?.email },
+        });
+      }
+    });
+  } else {
+    res.status(400).json({ msj: "Debes enviar un token" });
+  }
+};
+
+module.exports = { login, register, verify };

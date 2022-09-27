@@ -1,30 +1,33 @@
 import * as Yup from "yup";
-import { Formik, Form } from "formik";
-import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
+import { Formik, Form } from "formik";
+import { Link, useNavigate } from "react-router-dom";
 
 import { AuthProps } from "../../interfaces";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
+import { register } from "../../services/authServices";
 
-import AuthContext from "../../context/AuthContext";
+import NotificationContext from "../../context/NotificationContext";
 
 import styles from "./styles.module.scss";
+import AuthContext from "../../context/AuthContext";
 
 const initialValues: AuthProps = {
   email: "",
   password: "",
 };
 
-export const Login = () => {
+export const Register = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { onLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { onRegister } = useContext(AuthContext);
 
   const handleSubmit = async (values: AuthProps) => {
     try {
       setIsLoading(true);
-      await onLogin(values);
+      await onRegister(values);
       setIsLoading(false);
     } catch (error) {
       console.error(error);
@@ -46,7 +49,7 @@ export const Login = () => {
       >
         {(formik) => (
           <Form noValidate>
-            <h1>Iniciar Sesión</h1>
+            <h1>Registrate</h1>
             <div className={styles.inputs}>
               <Input
                 label="Email"
@@ -61,9 +64,9 @@ export const Login = () => {
                 placeholder="Password..."
               />
             </div>
-            <Button buttonText="Iniciar sesión" isLoading={isLoading} />
-            <span className={styles.register}>
-              Aun no tienes cuenta? <Link to="/register">Registrate</Link>
+            <Button buttonText="Crear cuenta" isLoading={isLoading} />
+            <span className={styles.login}>
+              Ya tienes cuenta? <Link to="/">Inicia sesión!</Link>
             </span>
           </Form>
         )}

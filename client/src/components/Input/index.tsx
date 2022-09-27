@@ -5,7 +5,7 @@ interface Props {
   label: string;
   name: string;
   type: string;
-  placeholder: string;
+  placeholder?: string;
 }
 
 export const Input = ({ label, name, type, placeholder }: Props) => {

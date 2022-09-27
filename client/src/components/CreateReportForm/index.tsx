@@ -13,7 +13,7 @@ interface Props {
 
 const user = JSON.parse(localStorage.getItem("gdi-user")!);
 const initialValues: IReport = {
-  userRef: user?._id,
+  userRef: user && user?._id,
   month: "",
   initialMoney: 0,
 };
@@ -32,7 +32,6 @@ export const CreateReportForm = ({ getReports }: Props) => {
         month,
       });
 
-      console.log(data);
       getReports();
     } catch (error) {}
   };
@@ -44,7 +43,7 @@ export const CreateReportForm = ({ getReports }: Props) => {
 
   return (
     <Formik
-     initialValues={initialValues}
+      initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={validations}
     >
