@@ -39,15 +39,19 @@ const register = async (req, res) => {
 
   User.findOne({ email }).then((user) => {
     if (user) {
-      return res.json({ mensaje: "Ya existe un usuario con ese email" });
+      return res.json({ msj: "Ya existe un usuario con ese email" });
     }
 
     if (!email || !password) {
-      return res.json({ mensaje: "Te falto enviar algun campo" });
+      return res.json({ msj: "Te falto enviar algun campo" });
     }
 
     bcrypt.hash(password, 10, (error, passwordHasheada) => {
       if (error) res.json({ error });
+
+      const token = jwt.sign({ data: user }, "secreto", {
+        expiresIn: 86400 /* 24hs */,
+      });
 
       const newUser = new User({
         email,
@@ -57,7 +61,8 @@ const register = async (req, res) => {
       newUser
         .save()
         .then((user) => {
-          res.json({ msj: "Usuario logeado correctamente", user });
+          const { password, ...rest } = user._doc;
+          res.json({ msj: "Usuario creado correctamente", user: rest, token });
         })
         .catch((error) => console.error(error));
     });
