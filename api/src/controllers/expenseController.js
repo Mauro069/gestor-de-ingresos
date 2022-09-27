@@ -24,7 +24,7 @@ const createExpense = async (req, res) => {
 
     await newExpense.save();
     res.json({ msj: "Gasto cargado correctamente", expense: newExpense });
-  } catch (e) {
+  } catch (error) {
     res.json({ msj: "Ocurrio un error", error });
   }
 };
