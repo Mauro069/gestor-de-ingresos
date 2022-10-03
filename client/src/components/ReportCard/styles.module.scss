@@ -2,13 +2,17 @@
   background-color: rgb(216, 216, 216);
   border: 1px solid rgb(197, 197, 197);
   padding: 1rem;
-  width: 200px;
+  width: fit-content;
   text-transform: capitalize;
   border-radius: 0.5rem;
   cursor: pointer;
 
   span {
     font-weight: bold;
+  }
+
+  hr {
+    margin: 1rem 0;
   }
 }
 

@@ -1,54 +1,81 @@
-import axios from "axios";
-import { Formik, Form } from "formik";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
+
 import { useParams } from "react-router-dom";
-import { Input } from "../../components/Input";
-import Loader from "../../components/Loader";
-import { MySelect } from "../../components/Select";
-import { IReport } from "../../interfaces";
+import NotificationContext from "../../context/NotificationContext";
+import { IExpense, IPercentage, IReport } from "../../interfaces";
+import {
+  createExpense,
+  getExpensesByReport,
+  getPercentages,
+  getTypesExpenses,
+} from "../../services/expensesServices";
+
+import { CreateExpense } from "../../components/Forms/CreateExpense";
+import { useFilter } from "../../hooks/useFilter";
+import TitlesAndGraphic from "./components/TitlesAndGraphic";
+import { ExpenseCard } from "../../components/ExpenseCard";
+import FilterByType from "./components/FilterByType";
 
 import styles from "./styles.module.scss";
+import { getReportById } from "../../services/reportsServices";
 
 export const ReportDetail = () => {
   const [report, setReport] = useState<IReport | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [message, setMessage] = useState<string | null>(null);
-  const [expenseTypes, setExpenseTypes] = useState<any>(null);
+  const [expenses, setExpenses] = useState<IExpense[] | null>(null);
+  const [percentages, setPercentages] = useState<IPercentage[] | null>(null);
+  const [expensesTypes, setExpensesTypes] = useState(null);
+
   const { reportId } = useParams();
+  const { showNotification } = useContext(NotificationContext);
+  const { filtrar, filterSelected, dataFiltered } = useFilter(expenses!);
 
   const getReport = useCallback(async () => {
-    const { data } = await axios.get(
-      `http://localhost:4000/api/reports/${reportId}`
-    );
-
-    setReport(data.report);
+    const response = await getReportById(reportId);
+    setReport(response.report);
   }, []);
 
-  const getExpenseTypes = useCallback(async () => {
-    const { data } = await axios.get("http://localhost:4000/api/expense-types");
+  const getExpensesPercentages = async () => {
+    const response = await getPercentages(reportId);
+    setPercentages(response?.expensesSeparated);
+  };
 
-    setExpenseTypes(data.expenseTypes);
-  }, []);
+  const getExpenses = async () => {
+    const response = await getExpensesByReport(reportId);
+    setExpenses(response.expenses);
+  };
+
+  const getExpensesTypes = async () => {
+    const response = await getTypesExpenses();
+    setExpensesTypes(response.expenseTypes);
+  };
 
   useEffect(() => {
     if (reportId) {
       getReport();
-      getExpenseTypes();
+      getExpenses();
+      getExpensesPercentages();
+      getExpensesTypes();
     }
   }, []);
 
   const handleSubmit = async (values: any) => {
     try {
       setLoading(true);
-
-      const { data } = await axios.post("http://localhost:4000/api/expenses", {
-        reportRef: values.reportRef,
-        description: values.description,
-        date: values.date,
-        type: values.type,
+      const response = await createExpense(values);
+      /* @ts-ignore */
+      showNotification({
+        msj: response.msj,
+        open: true,
+        status: response.report ? "success" : "error",
       });
 
-      setMessage(data.msj); 
+      if (response.report) {
+        await getExpenses();
+        await getReport();
+        await getExpensesPercentages();
+      }
+      
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -56,49 +83,37 @@ export const ReportDetail = () => {
     }
   };
 
-  const initialValues = {
-    reportRef: reportId,
-    date: "",
-    type: "",
-    description: "",
-  };
-
   return (
-    <div>
-      <h3>Report Detail de {report?.month}</h3>
-      <div>
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-          {(formik) => (
-            <Form noValidate className={styles.form}>
-              <h1>Agregar Gasto</h1>
-              <div className={styles.inputs}>
-                <Input
-                  label="Descripcion"
-                  name="description"
-                  type="text"
-                  placeholder="Descripcion..."
-                />
-                <Input label="Fecha" name="date" type="date" />
-                <MySelect label={"Tipo de gasto"} name="type">
-                  <option value="">Selecciona un tipo de gasto</option>
-                  {expenseTypes?.map((expenseType: any) => (
-                    <option key={expenseType._id} value={expenseType._id}>
-                      {expenseType.name}
-                    </option>
-                  ))}
-                </MySelect>
-              </div>
-              {loading ? (
-                <div className={styles.loadingContainer}>
-                  <Loader /> Cargando...
-                </div>
-              ) : (
-                <button type="submit">Crear reporte</button>
-              )}
-              {message && <span>{message}</span>}
-            </Form>
-          )}
-        </Formik>
+    <div className={styles.reportDetailPage}>
+      <div className={styles.left}>
+        <TitlesAndGraphic report={report} percentages={percentages} />
+        <CreateExpense onSubmit={handleSubmit} loading={loading} />
+      </div>
+
+      <div className={styles.rigth}>
+        <div className={styles.top}>
+          <h1>Tus gastos</h1>
+          <FilterByType
+            filters={expensesTypes!}
+            /* @ts-ignore */
+            filterSelected={filterSelected}
+            setFilterSelected={filtrar}
+          />
+        </div>
+        <div className={styles.expenses}>
+          {dataFiltered?.map((expense: IExpense) => (
+            <ExpenseCard
+              key={expense._id}
+              callbacks={async () => {
+                await getExpenses();
+                await getReport();
+                await getExpensesPercentages();
+              }}
+              {...expense}
+            />
+          ))}
+          {!expenses?.length && <p>No has cargado ningun gasto</p>}
+        </div>
       </div>
     </div>
   );

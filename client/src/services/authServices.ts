@@ -17,6 +17,8 @@ interface LoginResponse {
   };
 }
 
+const dataLS = JSON.parse(localStorage.getItem("gdi-user")!);
+
 export const login = async ({ email, password }: authProps) => {
   try {
     const { data }: LoginResponse = await api.post("/auth/login", {
@@ -43,7 +45,9 @@ export const register = async ({ email, password }: authProps) => {
 
 export const verifyToken = async () => {
   try {
-    const { data }: any = await api.get("/auth/verify");
+    const { data }: any = await api.get("/auth/verify", {
+      headers: { token: dataLS?.token },
+    });
     return data;
   } catch (error) {
     console.error(error);

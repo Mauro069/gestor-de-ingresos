@@ -14,7 +14,12 @@ const defaultState: IState = {
   auth: null,
 };
 
-export const AuthContext = createContext<any>(defaultState);
+interface IAuthContext {
+  authState: IState;
+  onLogin: (values: { email: string; password: string }) => void;
+  onRegister: (values: { email: string; password: string }) => void;
+  logout: () => void;
+}
 
 interface IState {
   data: {
@@ -23,6 +28,8 @@ interface IState {
   };
   auth: boolean | null;
 }
+
+export const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 interface Props {
   children: JSX.Element | JSX.Element[];
@@ -38,7 +45,7 @@ export const AuthProvider = ({ children }: Props) => {
   const onLogin = async (values: { email: string; password: string }) => {
     const response = await login(values);
 
-    if (response?.msj !== "Contraseña incorrecta") {
+    if (response?.token && response?.msj !== "Contraseña incorrecta") {
       setAuthState({
         auth: true,
         data: { token: response?.token, user: response?.user },
@@ -95,7 +102,7 @@ export const AuthProvider = ({ children }: Props) => {
 
   const validateUser = async () => {
     const response = await verifyToken();
-
+    console.log(response);
     if (response.msj !== "Token valido") {
       setAuthState(defaultState);
       localStorage.removeItem("gdi-user");
@@ -120,13 +127,12 @@ export const AuthProvider = ({ children }: Props) => {
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("gdi-user")!);
 
-    if (data?.token) {
-      validateUser();
-      return;
+    if (data.token) {
+      /* validateUser(); */
+    } else {
+      if (pathname === "/" || pathname === "/register") return;
+      navigate("/");
     }
-
-    if (pathname === "/" || pathname === "/register") return;
-    navigate("/");
   }, []);
 
   return (

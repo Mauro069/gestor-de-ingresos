@@ -7,6 +7,7 @@ const ExpenseTypeSchema = new Schema(
   },
   {
     versionKey: false,
+    timestamps: true,
   }
 );
 

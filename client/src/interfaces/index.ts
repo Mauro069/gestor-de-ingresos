@@ -1,8 +1,9 @@
 export interface IReport {
   initialMoney: number;
   month: string;
-  userRef: string;
+  userRef: string | null | undefined;
   _id?: string;
+  currentAmount?: number;
 }
 
 export interface AuthProps {
@@ -19,3 +20,24 @@ export interface IUser {
 }
 
 export type UserTypes = "admin" | null;
+
+export interface IExpenseType {
+  _id: string;
+  color: string;
+  name: string;
+}
+
+export interface IExpense {
+  date: string;
+  description: string;
+  reportRef?: string;
+  type?: IExpenseType | null;
+  _id?: string;
+  amount: number;
+}
+
+export interface IPercentage {
+  value: number;
+  name: string;
+  color: string;
+}

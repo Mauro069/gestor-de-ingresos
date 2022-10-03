@@ -19,10 +19,11 @@ const createReport = async (req, res) => {
       userRef,
       month,
       initialMoney,
+      currentAmount: initialMoney,
     });
 
     await newReport.save();
-    res.json({ msj: "Reporte creado correctamente", user: newReport });
+    res.json({ msj: "Reporte creado correctamente", report: newReport });
   } catch (error) {
     res.json({ msj: "Ocurrio un error", error });
   }
@@ -41,13 +42,13 @@ const getReportById = async (req, res) => {
   const { reportId } = req.params;
 
   if (!reportId) {
-    res.json({
+    return res.json({
       msj: "Debes enviar un reportId",
     });
   }
 
   if (!isValidObjectId(reportId)) {
-    res.json({
+    return res.json({
       msj: "El reportId no es valido",
     });
   }

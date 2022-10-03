@@ -1,14 +1,12 @@
 const { Router } = require("express");
-const {
-  login,
-  register,
-  verify,
-} = require("../controllers/authControllers");
+const { login, register, verify } = require("../controllers/authControllers");
 const {
   getExpenses,
   createExpense,
   getExpensesByReport,
   getExpensesByExpenseType,
+  deleteExpense,
+  getPercentageExpense,
 } = require("../controllers/expenseController");
 const {
   getExpenseTypes,
@@ -39,16 +37,24 @@ router.route("/users").get(getUsers).post(createUser);
 router.route("/users/:userId").get(getUserById);
 
 /* Reports */
-router.route("/reports").get(verifyToken, getReports).post(createReport);
+router
+  .route("/reports")
+  .get(verifyToken, getReports)
+  .post(verifyToken, createReport);
 router.route("/reports/:reportId").get(getReportById);
-router.get("/reports/user/:userId", verifyToken, getReportsByUserId);
+router.route("/reports/user/:userId").get(verifyToken, getReportsByUserId);
 
 /* Expense Types */
 router.route("/expense-types").get(getExpenseTypes).post(createExpenseType);
 
 /* Expenses */
 router.route("/expenses").get(getExpenses).post(createExpense);
+router
+  .route("/expenses/percentage/:reportId")
+  .get(getPercentageExpense)
+  .post(createExpense);
 router.route("/expenses/report/:reportId").get(getExpensesByReport);
+router.route("/expenses/:expenseId").delete(deleteExpense);
 router
   .route("/expenses/report/:reportId/expense-type/:expenseTypeId")
   .get(getExpensesByExpenseType);

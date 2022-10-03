@@ -1,0 +1,73 @@
+.filter {
+  background-color: #475569;
+  border-radius: 8px;
+  color: white;
+  position: relative;
+
+  .selected {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    align-items: center;
+    width: 150px;
+    height: 30px;
+    margin: 0 10px;
+
+    color: white;
+
+    span {
+      color: white;
+      text-transform: capitalize;
+      font-weight: 400;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      font-size: 14px;
+    }
+
+    .rotateDown {
+      transition: 0.3s;
+      transform: rotate(0deg);
+      height: 20px;
+    }
+
+    .rotateTop {
+      transition: 0.3s;
+      transform: rotate(-180deg);
+      height: 20px;
+    }
+  }
+
+  .othersOpen {
+    margin-top: 10px;
+    width: 200px;
+    right: 0;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    text-transform: capitalize;
+    color: white;
+    background-color: #17161e;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 3px solid #435063;
+    z-index: 10;
+
+    .filterItem {
+      cursor: pointer;
+      padding: 10px;
+      font-weight: 300;
+    }
+
+    .filterItem:hover {
+      transition-duration: 0.3s;
+      background-color: #435063;
+      width: 100%;
+    }
+  }
+
+  .othersClose {
+    display: none;
+  }
+}

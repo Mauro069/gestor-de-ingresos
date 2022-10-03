@@ -26,7 +26,9 @@ const createExpenseType = async (req, res) => {
 const getExpenseTypes = async (req, res) => {
   try {
     const expenseTypes = await ExpenseType.find();
-    res.json({ expenseTypes });
+    res.json({
+      expenseTypes,
+    });
   } catch (error) {
     res.json({ msj: "Ocurrio un error", error });
   }

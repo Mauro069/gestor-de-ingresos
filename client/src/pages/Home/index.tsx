@@ -1,5 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { CreateReportForm } from "../../components/CreateReportForm";
+import { CreateReport } from "../../components/Forms/CreateReport";
 import { ReportCard } from "../../components/ReportCard";
 import AuthContext from "../../context/AuthContext";
 import { IReport } from "../../interfaces";
@@ -10,18 +10,15 @@ import styles from "./styles.module.scss";
 
 export const Home = () => {
   const [reports, setReports] = useState<IReport[] | null>(null);
-
-  const { authState } = useContext(AuthContext);
+  const dataLS = JSON.parse(localStorage.getItem("gdi-user")!);
 
   const getReports = useCallback(async () => {
-    console.log(authState?.data?.user?._id);
-    const response = await getReportsByUser(authState?.data?.user?._id);
+    const response = await getReportsByUser(dataLS?.user._id);
     setReports(response?.reports);
-    console.log(response);
   }, []);
 
   useEffect(() => {
-    authState?.data?.user && getReports();
+    dataLS?.user !== undefined && getReports();
   }, []);
 
   return (
@@ -32,7 +29,7 @@ export const Home = () => {
           <ReportCard key={report._id} {...report} />
         ))}
       </div>
-      <CreateReportForm getReports={getReports} />
+      <CreateReport getReports={getReports} />
     </div>
   );
 };
