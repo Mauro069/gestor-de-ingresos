@@ -11,14 +11,25 @@ import styles from "./styles.module.scss";
 export const Home = () => {
   const [reports, setReports] = useState<IReport[] | null>(null);
   const dataLS = JSON.parse(localStorage.getItem("gdi-user")!);
+  const { authState } = useContext(AuthContext);
 
   const getReports = useCallback(async () => {
-    const response = await getReportsByUser(dataLS?.user._id);
-    setReports(response?.reports);
+    if (authState?.data?.token) {
+      let response = await getReportsByUser(
+        authState?.data?.user?._id,
+        authState?.data?.token
+      );
+      setReports(response?.reports);
+    } else {
+      let response = await getReportsByUser(dataLS?.user._id);
+      setReports(response?.reports);
+    }
   }, []);
 
   useEffect(() => {
-    dataLS?.user !== undefined && getReports();
+    if (authState.data.token || dataLS) {
+      getReports();
+    }
   }, []);
 
   return (

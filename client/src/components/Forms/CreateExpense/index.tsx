@@ -1,4 +1,3 @@
-import * as Yup from "yup";
 import { Formik, Form } from "formik";
 
 import styles from "./styles.module.scss";
@@ -42,15 +41,16 @@ export const CreateExpense = ({ onSubmit, loading }: Props) => {
 
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
-      {(formik) => (
+      {({ handleChange }) => (
         <Form noValidate className={styles.form}>
           <h1>Agregar Gasto</h1>
           <div className={styles.flex}>
-            <Input
-              as="textarea"
+            <input
               name="description"
-              type="textarea"
+              autoComplete="off"
               placeholder="Descripcion..."
+              className={styles.textArea}
+              onChange={(e) => handleChange(e)}
             />
             <div className={styles.rigth}>
               <Input name="date" type="date" />

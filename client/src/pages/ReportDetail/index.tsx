@@ -67,10 +67,12 @@ export const ReportDetail = () => {
       showNotification({
         msj: response.msj,
         open: true,
-        status: response.report ? "success" : "error",
+        status: response.expense ? "success" : "error",
       });
 
-      if (response.report) {
+      console.log(response)
+
+      if (response?.expense) {
         await getExpenses();
         await getReport();
         await getExpensesPercentages();

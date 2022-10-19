@@ -3,10 +3,10 @@ import { api } from "./apiBase";
 
 const dataLS = JSON.parse(localStorage.getItem("gdi-user")!);
 
-export const getReportsByUser = async (id?: string) => {
+export const getReportsByUser = async (id?: string, token?: string) => {
   try {
     const { data }: any = await api.get(`/reports/user/${id}`, {
-      headers: { token: dataLS?.token },
+      headers: { token: token ? token : dataLS?.token },
     });
     return data;
   } catch (error) {

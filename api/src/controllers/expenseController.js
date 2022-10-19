@@ -8,11 +8,11 @@ const createExpense = async (req, res) => {
     const { reportRef, description, date, type, amount } = req.body;
 
     if (!reportRef || !description || !date || !type || !amount) {
-      res.json({ msj: "Te falto enviar algun campo" });
+      return res.json({ msj: "Te falto enviar algun campo" });
     }
 
     if (!isValidObjectId(reportRef) || !isValidObjectId(type)) {
-      res.json({
+      return res.json({
         msj: "El report ref o el tipo de gasto no es valido",
       });
     }

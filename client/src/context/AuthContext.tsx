@@ -127,7 +127,7 @@ export const AuthProvider = ({ children }: Props) => {
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("gdi-user")!);
 
-    if (data.token) {
+    if (data?.token) {
       /* validateUser(); */
     } else {
       if (pathname === "/" || pathname === "/register") return;
