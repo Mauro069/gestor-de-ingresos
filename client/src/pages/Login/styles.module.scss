@@ -5,6 +5,8 @@
   align-items: center;
   justify-content: center;
   gap: 2rem;
+  background-color: #17161E;
+  color: white;
 
   form {
     display: flex;
@@ -24,15 +26,22 @@
     .register {
       text-align: end;
       font-size: 14px;
+      color: rgba(255, 255, 255, 0.5);
 
       a {
-        color: rgb(66, 66, 255);
+        color: white;
         text-decoration: none;
       }
 
       a:hover {
         text-decoration: underline;
       }
+    }
+
+    button {
+      background: #475569;
+      text-transform: uppercase;
+      font-weight: bold;
     }
   }
 }

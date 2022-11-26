@@ -3,12 +3,13 @@ import { IReport } from "../../interfaces";
 
 import styles from "./styles.module.scss";
 
-export const ReportCard = ({
+export const ReportItem = ({
   initialMoney,
   month,
   _id,
   currentAmount,
 }: IReport) => {
+  console.log({ initialMoney, month, _id, currentAmount });
   const navigate = useNavigate();
 
   return (
@@ -18,7 +19,6 @@ export const ReportCard = ({
     >
       <p>{month}</p>
       <span>Dinero inicial: ${initialMoney}</span>
-      <hr/>
       <span>Dinero Actual: ${currentAmount}</span>
     </div>
   );
