@@ -1,4 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from "react";
+import { CreateReport } from "../../components/Forms/CreateReport";
 import { Layout } from "../../components/Layout";
 import { ReportsList } from "../../components/ReportsLIst";
 import AuthContext from "../../context/AuthContext";
@@ -33,6 +34,7 @@ export const Home = () => {
   return (
     <Layout>
       <ReportsList reports={reports} />
+      {/* <CreateReport getReports={getReports} /> */}
     </Layout>
   );
 };

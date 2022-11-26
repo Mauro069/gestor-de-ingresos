@@ -1,14 +1,11 @@
 import { IReport } from "../../interfaces";
-import { ReportItem } from "../ReportItem";
 
 import styles from "./styles.module.scss";
-
 interface Props {
   reports: IReport[] | null;
 }
 
 export const ReportsList = ({ reports }: Props) => {
-  console.log(reports);
   return (
     <div className={styles.reportsList}>
       <h4>Tus reportes</h4>
@@ -59,15 +56,26 @@ const SecondItem = ({ initialMoney, month, _id, currentAmount }: IReport) => {
 
   return (
     <div className={styles.secondItem}>
-      <span>{month}</span>
-      <span>${initialMoney}</span>
-      <span>${initialMoney - currentAmount!}</span>
-      <span>${currentAmount}</span>
-      <span
-        style={{ color: colorsAndMessages[getStateOfExpenses(percentage)!] }}
-      >
-        {percentage}% {getStateOfExpenses(percentage)!}
+      <span className={styles.month}>
+        <b>Mes </b>| {month}
       </span>
+      <div className={styles.flex}>
+        <span>
+          <b>Dinero Inicial: </b>${initialMoney}
+        </span>
+        <span>
+          <b>Dinero Gastado: </b>${initialMoney - currentAmount!}
+        </span>
+        <span>
+          <b>Dinero Actual: </b>${currentAmount}
+        </span>
+        <span
+          style={{ color: colorsAndMessages[getStateOfExpenses(percentage)!] }}
+        >
+          <b>Porcentaje Gastado: </b> {percentage}%{" "}
+          {getStateOfExpenses(percentage)!}
+        </span>
+      </div>
       <SvgButton />
     </div>
   );
