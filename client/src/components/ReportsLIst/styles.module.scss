@@ -5,6 +5,7 @@
   color: white;
   border-radius: 30px 30px 0 0;
   padding: 2rem;
+  max-width: 1350px;
 
   h4 {
     font-weight: bold;
@@ -17,100 +18,5 @@
 
   @media (max-width: 900px) {
     width: 100%;
-  }
-}
-
-.firstItem {
-  padding: 1rem;
-  border-bottom: 2px solid #475569;
-  color: #7a828e;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  span {
-    width: 200px;
-  }
-
-  @media (max-width: 900px) {
-    display: none;
-  }
-}
-
-.secondItem {
-  cursor: pointer;
-  padding: 1rem;
-  border-bottom: 1px solid #475569;
-  color: white;
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-
-  span {
-    width: 200px;
-  }
-
-  @media (min-width: 901px) {
-    b {
-      display: none;
-    }
-  }
-
-  .flex {
-    padding: 1rem 0;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-
-    span {
-      width: 200px;
-    }
-  }
-
-  svg {
-    cursor: pointer;
-    stroke: #475569;
-  }
-
-  @media (max-width: 900px) {
-    flex-direction: column;
-    position: relative;
-    padding: 1rem 0;
-
-    .flex {
-      flex-wrap: wrap;
-      justify-content: space-between;
-      row-gap: 1rem;
-
-      span {
-        width: fit-content;
-      }
-    }
-
-    .month {
-      align-self: flex-start;
-      width: fit-content;
-      border-bottom: 1px solid #475569;
-      padding-bottom: 0.5rem;
-    }
-
-    svg {
-      position: absolute;
-      top: 0;
-      right: 0;
-      margin-top: 1rem;
-      margin-right: 1rem;
-    }
-  }
-}
-
-.secondItem:hover {
-  background-color: #47556950;
-  transition-duration: 1s;
-
-  svg {
-    stroke: white;
   }
 }
