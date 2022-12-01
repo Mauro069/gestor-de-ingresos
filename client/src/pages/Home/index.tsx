@@ -6,6 +6,9 @@ import AuthContext from "../../context/AuthContext";
 import { IReport } from "../../interfaces";
 
 import { getReportsByUser } from "../../services/reportsServices";
+import { withPoints } from "../../utils/withPoints";
+
+import styles from "./styles.module.scss";
 
 export const Home = () => {
   const [reports, setReports] = useState<IReport[] | null>(null);
@@ -25,16 +28,40 @@ export const Home = () => {
     }
   }, []);
 
+  const getTotalCurrentMoney = () => {
+    let currentMoneyTotal: number | undefined = reports?.reduce((prev, act) => {
+      return (prev += act?.currentAmount!);
+    }, 0);
+
+    return currentMoneyTotal && withPoints(currentMoneyTotal);
+  };
+
   useEffect(() => {
     if (authState.data.token || dataLS) {
       getReports();
     }
   }, []);
 
+  useEffect(() => {
+    if (reports) {
+      getTotalCurrentMoney();
+    }
+  }, []);
+
   return (
     <Layout>
-      <ReportsList reports={reports} />
-      {/* <CreateReport getReports={getReports} /> */}
+      <div className={styles.pageContainer}>
+        <div className={styles.welcome}>
+          <div>
+            <h1>Bienvenido!</h1>
+            <h4>
+              Tienes <b>${getTotalCurrentMoney()}</b> actualmente
+            </h4>
+          </div>
+          <CreateReport getReports={getReports} />
+        </div>
+        <ReportsList reports={reports} />
+      </div>
     </Layout>
   );
 };
