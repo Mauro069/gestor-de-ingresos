@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { IReport } from "../../interfaces";
+import { Pagination } from "../Pagination";
 import ReportItem from "../ReportItem";
 import ReportsTitles from "../ReportsTitles";
 
@@ -8,15 +10,27 @@ interface Props {
 }
 
 export const ReportsList = ({ reports }: Props) => {
+  const [page, changePage] = useState(1);
+  const perPage = 5;
+
   return (
     <div className={styles.reportsList}>
       <h4>Tus reportes</h4>
       <div className={styles.reports}>
         <ReportsTitles />
 
-        {reports?.map((report) => (
-          <ReportItem key={report?._id} {...report} />
-        ))}
+        {reports
+          ?.slice((page - 1) * perPage, (page - 1) * perPage + perPage)
+          .map((report) => (
+            <ReportItem key={report?._id} {...report} />
+          ))}
+
+        <Pagination
+          page={page}
+          perPage={perPage}
+          changePage={changePage}
+          listItems={reports?.length!}
+        />
       </div>
     </div>
   );
