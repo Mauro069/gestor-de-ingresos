@@ -60,17 +60,16 @@ export const CreateReport = ({ getReports }: Props) => {
     >
       {() => (
         <Form noValidate className={styles.form}>
-          <h1>Crear reporte</h1>
+          <p>Crear reporte</p>
           <div className={styles.inputs}>
-            <Input label="Mes" name="month" type="text" placeholder="Mes..." />
+            <Input name="month" type="text" placeholder="Mes..." />
             <Input
-              label="Dinero inicial"
               name="initialMoney"
               type="number"
               placeholder="Dinero inicial..."
             />
+            <Button buttonText="Crear reporte" isLoading={loading} />
           </div>
-          <Button buttonText="Crear reporte" isLoading={loading} />
         </Form>
       )}
     </Formik>
