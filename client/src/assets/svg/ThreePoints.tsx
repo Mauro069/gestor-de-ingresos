@@ -1,6 +1,7 @@
-export const Threepoints = () => {
+export const Threepoints = ({ ...props }) => {
   return (
     <svg
+      {...props}
       width="5"
       height="22"
       viewBox="0 0 5 22"
