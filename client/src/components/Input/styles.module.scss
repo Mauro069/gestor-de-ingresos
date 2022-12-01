@@ -4,11 +4,19 @@
   gap: 0.2rem;
   width: fit-content;
 
+  @media (max-width: 435px) {
+    width: 100%;
+
+    input {
+      width: 100% !important;
+    }
+  }
+
   input {
     width: 340px;
     border-radius: 4px;
     padding: 0.8rem;
-    background-color: #251F2B;
+    background-color: #251f2b;
     border: none;
   }
 
