@@ -1,5 +1,5 @@
 export interface IReport {
-  initialMoney: number;
+  initialMoney: number | null;
   month: string;
   userRef: string | null | undefined;
   _id?: string;
