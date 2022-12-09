@@ -84,9 +84,36 @@ const getReportsByUserId = async (req, res) => {
   }
 };
 
+const deleteReportById = async (req, res) => {
+  const { reportId } = req.params;
+
+  if (!reportId) {
+    res.json({
+      msj: "Debes enviar un reportId",
+    });
+  }
+
+  if (!isValidObjectId(reportId)) {
+    res.json({
+      msj: "El reportId no es valido",
+    });
+  }
+
+  try {
+    const reportDeleted = await Report.findByIdAndDelete(reportId);
+    res.json({
+      msj: "El reporte fue eliminado correctamente",
+      reportDeleted,
+    });
+  } catch (error) {
+    res.json({ msj: "Ocurrio un error", error });
+  }
+};
+
 module.exports = {
   createReport,
   getReports,
   getReportById,
   getReportsByUserId,
+  deleteReportById
 };

@@ -17,6 +17,7 @@ const {
   createReport,
   getReportById,
   getReportsByUserId,
+  deleteReportById,
 } = require("../controllers/reportControllers");
 const {
   getUsers,
@@ -41,7 +42,10 @@ router
   .route("/reports")
   .get(verifyToken, getReports)
   .post(verifyToken, createReport);
-router.route("/reports/:reportId").get(getReportById);
+router
+  .route("/reports/:reportId")
+  .get(getReportById)
+  .delete(verifyToken, deleteReportById);
 router.route("/reports/user/:userId").get(verifyToken, getReportsByUserId);
 
 /* Expense Types */
