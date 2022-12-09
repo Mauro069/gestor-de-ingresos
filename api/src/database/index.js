@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const MONGO_URL = "mongodb://localhost/gestor-de-ingresos";
+const MONGO_URL = "mongodb://127.0.0.1/gestor-de-ingresos";
 
 const db = async () => {
   await mongoose
