@@ -21,6 +21,10 @@
     .inputs {
       display: flex;
       gap: 2rem;
+
+      input {
+        color: white;
+      }
     }
 
     .register {
