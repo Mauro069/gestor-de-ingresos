@@ -1,12 +1,12 @@
 import { IReport } from "../interfaces";
 import { api } from "./apiBase";
 
-const dataLS = JSON.parse(localStorage.getItem("gdi-user")!);
-
 export const getReportsByUser = async (id?: string, token?: string) => {
   try {
     const { data }: any = await api.get(`/reports/user/${id}`, {
-      headers: { token: token ? token : dataLS?.token },
+      headers: {
+        token: JSON.parse(localStorage.getItem("gdi-user")!).token || null,
+      },
     });
     return data;
   } catch (error) {
@@ -25,7 +25,9 @@ export const createReport = async (values: IReport) => {
         month,
       },
       {
-        headers: { token: dataLS?.token },
+        headers: {
+          token: JSON.parse(localStorage.getItem("gdi-user")!).token || null,
+        },
       }
     );
     console.log(data);
@@ -39,6 +41,22 @@ export const getReportById = async (reportId?: string) => {
   try {
     const { data } = await api.get(
       `http://localhost:4000/api/reports/${reportId}`
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deleteReportById = async (reportId?: string, token?: string) => {
+  try {
+    const { data } = await api.delete(
+      `http://localhost:4000/api/reports/${reportId}`,
+      {
+        headers: {
+          token: JSON.parse(localStorage.getItem("gdi-user")!).token || null,
+        },
+      }
     );
     return data;
   } catch (error) {
