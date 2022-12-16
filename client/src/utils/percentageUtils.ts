@@ -4,7 +4,7 @@ export const getStateOfExpenses = (percentage: number) => {
   else if (percentage >= 41 && percentage < 61) return "🙂";
   else if (percentage >= 61 && percentage < 81) return "😐";
   else if (percentage >= 81 && percentage < 100) return "😑";
-  else if (percentage === 100) return "😶";
+  else if (percentage >= 100) return "😶";
 };
 
 export const colorsAndMessages = {
