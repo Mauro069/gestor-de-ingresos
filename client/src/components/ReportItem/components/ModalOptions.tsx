@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Threepoints } from "../../../assets/svg/ThreePoints";
+import { deleteReportById } from "../../../services/reportsServices";
 
 import styles from "./ModalOptions.module.scss";
 
@@ -17,6 +18,11 @@ interface OptionProps {
 export const ModalOptions = ({ setModal, modal, reportId }: Props) => {
   const navigate = useNavigate();
 
+  const onDelete = async  () => {
+    const reportDeleted = await deleteReportById(reportId)
+    console.log(reportDeleted)
+  }
+
   const options: OptionProps[] = [
     {
       title: "Ver detalle",
@@ -24,7 +30,7 @@ export const ModalOptions = ({ setModal, modal, reportId }: Props) => {
     },
     {
       title: "Borrar",
-      onClick: () => console.log("Borrar"),
+      onClick: () => onDelete(),
     },
   ];
 
