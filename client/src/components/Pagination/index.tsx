@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const Pagination = ({ page, changePage, perPage, listItems }: Props) => {
-  const lastPage = Math.ceil(listItems / perPage);
+  const lastPage = Math.ceil(listItems / perPage) || 1;
 
   return (
     <div className={styles.pagination}>
