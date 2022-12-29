@@ -64,19 +64,19 @@ const getReportById = async (req, res) => {
 const getReportsByUserId = async (req, res) => {
   const { userId } = req.params;
 
-  if (!userId) {
-    res.json({
-      msj: "Debes enviar un userId",
-    });
-  }
-
-  if (!isValidObjectId(userId)) {
-    res.json({
-      msj: "El userId no es valido",
-    });
-  }
-
   try {
+    if (!userId) {
+      res.json({
+        msj: "Debes enviar un userId",
+      });
+    }
+
+    if (!isValidObjectId(userId)) {
+      res.json({
+        msj: "El userId no es valido",
+      });
+    }
+
     const reports = await Report.find({ userRef: userId });
     res.json({ reports });
   } catch (error) {
@@ -115,5 +115,5 @@ module.exports = {
   getReports,
   getReportById,
   getReportsByUserId,
-  deleteReportById
+  deleteReportById,
 };
