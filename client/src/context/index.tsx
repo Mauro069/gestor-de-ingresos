@@ -1,5 +1,6 @@
 import { AuthProvider } from "./AuthContext";
 import { NotificationProvider } from "./NotificationContext";
+import { ReportsProvider } from "./ReportsContext/ReportsContext";
 
 interface StateProviderProps {
   children: JSX.Element | JSX.Element[];
@@ -7,9 +8,11 @@ interface StateProviderProps {
 
 const StateProvider = ({ children }: StateProviderProps) => {
   return (
-    <AuthProvider>
-      <NotificationProvider>{children}</NotificationProvider>
-    </AuthProvider>
+    <NotificationProvider>
+      <AuthProvider>
+        <ReportsProvider>{children}</ReportsProvider>
+      </AuthProvider>
+    </NotificationProvider>
   );
 };
 
