@@ -1,4 +1,3 @@
-import { ErrorMessage, Field } from "formik";
 import styles from "./styles.module.scss";
 
 interface Props {
@@ -13,8 +12,10 @@ export const Input = ({ label, name, type, placeholder, as }: Props) => {
   return (
     <div className={styles.inputContainer}>
       {label && <label>{label}</label>}
-      <Field as={as} name={name} type={type} placeholder={placeholder} />
-      <ErrorMessage name={name} component={"span"} />
+      <h1>Agregar label e input</h1>
     </div>
   );
 };
+
+/* <Field as={as} name={name} type={type} placeholder={placeholder} />
+      <ErrorMessage name={name} component={"span"} /> */

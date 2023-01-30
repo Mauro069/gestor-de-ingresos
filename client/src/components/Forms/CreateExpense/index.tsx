@@ -1,5 +1,3 @@
-import { Formik, Form } from "formik";
-
 import styles from "./styles.module.scss";
 import { Input } from "../../Input";
 import { MySelect } from "../../Select";
@@ -40,7 +38,13 @@ export const CreateExpense = ({ onSubmit, loading }: Props) => {
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+    <form>
+      <h1>Hacer form para crear gastos</h1>
+    </form>
+  );
+};
+
+/*     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {({ handleChange }) => (
         <Form noValidate className={styles.form}>
           <h1>Agregar Gasto</h1>
@@ -68,6 +72,4 @@ export const CreateExpense = ({ onSubmit, loading }: Props) => {
           <Button buttonText="Agregar gasto" isLoading={loading} />
         </Form>
       )}
-    </Formik>
-  );
-};
+    </Formik> */

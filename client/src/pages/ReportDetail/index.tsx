@@ -19,7 +19,7 @@ import FilterByType from "./components/FilterByType";
 import styles from "./styles.module.scss";
 import { getReportById } from "../../services/reportsServices";
 
-export const ReportDetail = () => {
+export function ReportDetail() {
   const [report, setReport] = useState<IReport | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [expenses, setExpenses] = useState<IExpense[] | null>(null);
@@ -70,14 +70,14 @@ export const ReportDetail = () => {
         status: response.expense ? "success" : "error",
       });
 
-      console.log(response)
+      console.log(response);
 
       if (response?.expense) {
         await getExpenses();
         await getReport();
         await getExpensesPercentages();
       }
-      
+
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -119,4 +119,4 @@ export const ReportDetail = () => {
       </div>
     </div>
   );
-};
+}

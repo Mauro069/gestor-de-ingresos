@@ -1,5 +1,3 @@
-import * as Yup from "yup";
-import { Formik, Form } from "formik";
 import { useContext, useState } from "react";
 
 import { Input } from "../../Input";
@@ -47,13 +45,14 @@ export const CreateReport = ({ getReports }: Props) => {
     }
   };
 
-  const validations = Yup.object({
-    month: Yup.string().required("Requerido"),
-    initialMoney: Yup.number().required("Requerido").notOneOf([0], "Requerido"),
-  });
-
   return (
-    <Formik
+    <form>
+      <h1>Crear form para crear reportes</h1>
+    </form>
+  );
+};
+
+/* <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={validations}
@@ -72,6 +71,4 @@ export const CreateReport = ({ getReports }: Props) => {
           </div>
         </Form>
       )}
-    </Formik>
-  );
-};
+    </Formik> */

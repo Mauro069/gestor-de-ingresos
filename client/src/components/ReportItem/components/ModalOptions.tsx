@@ -18,10 +18,10 @@ interface OptionProps {
 export const ModalOptions = ({ setModal, modal, reportId }: Props) => {
   const navigate = useNavigate();
 
-  const onDelete = async  () => {
-    const reportDeleted = await deleteReportById(reportId)
-    console.log(reportDeleted)
-  }
+  const onDelete = async () => {
+    const reportDeleted = await deleteReportById(reportId);
+    console.log(reportDeleted);
+  };
 
   const options: OptionProps[] = [
     {
@@ -39,8 +39,8 @@ export const ModalOptions = ({ setModal, modal, reportId }: Props) => {
       <Threepoints onClick={() => setModal(!modal)} />
       {modal && (
         <div className={styles.modal}>
-          {options.map(({ title, onClick }) => (
-            <p onClick={onClick} className={styles.option}>
+          {options.map(({ title, onClick }, i) => (
+            <p key={i} onClick={onClick} className={styles.option}>
               {title}
             </p>
           ))}

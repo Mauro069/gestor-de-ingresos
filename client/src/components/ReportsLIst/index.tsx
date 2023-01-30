@@ -13,6 +13,8 @@ export const ReportsList = ({ reports }: Props) => {
   const [page, changePage] = useState(1);
   const perPage = 5;
 
+  console.log(reports)
+
   return (
     <div className={styles.reportsList}>
       <h4>Tus reportes</h4>

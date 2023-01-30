@@ -1,32 +1,15 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { CreateReport } from "../../components/Forms/CreateReport";
 import { Layout } from "../../components/Layout";
 import { ReportsList } from "../../components/ReportsLIst";
-import AuthContext from "../../context/AuthContext";
-import { IReport } from "../../interfaces";
+import ReportsContext from "../../context/ReportsContext/ReportsContext";
 
-import { getReportsByUser } from "../../services/reportsServices";
 import { withPoints } from "../../utils/withPoints";
 
 import styles from "./styles.module.scss";
 
-export const Home = () => {
-  const [reports, setReports] = useState<IReport[] | null>(null);
-  const dataLS = JSON.parse(localStorage.getItem("gdi-user")!);
-  const { authState } = useContext(AuthContext);
-
-  const getReports = useCallback(async () => {
-    if (authState?.data?.token) {
-      let response = await getReportsByUser(
-        authState?.data?.user?._id,
-        authState?.data?.token
-      );
-      setReports(response?.reports);
-    } else {
-      let response = await getReportsByUser(dataLS?.user._id);
-      setReports(response?.reports);
-    }
-  }, []);
+export function Home() {
+  const { reports, getReports } = useContext(ReportsContext);
 
   const getTotalCurrentMoney = () => {
     let currentMoneyTotal: number | undefined = reports?.reduce((prev, act) => {
@@ -35,12 +18,6 @@ export const Home = () => {
 
     return currentMoneyTotal && withPoints(currentMoneyTotal);
   };
-
-  useEffect(() => {
-    if (authState.data.token || dataLS) {
-      getReports();
-    }
-  }, []);
 
   useEffect(() => {
     if (reports) {
@@ -58,10 +35,10 @@ export const Home = () => {
               Tienes <b>${getTotalCurrentMoney()}</b> actualmente
             </h4>
           </div>
-          <CreateReport getReports={getReports} />
+          <CreateReport getReports={getReports!} />
         </div>
         <ReportsList reports={reports} />
       </div>
     </Layout>
   );
-};
+}

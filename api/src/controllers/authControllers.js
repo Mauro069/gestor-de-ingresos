@@ -20,6 +20,7 @@ const login = async (req, res) => {
           const { password, ...rest } = user._doc;
 
           res.json({
+            ok: true,
             msj: "Usuario logeado correctamente",
             user: rest,
             token,
@@ -62,7 +63,12 @@ const register = async (req, res) => {
         .save()
         .then((user) => {
           const { password, ...rest } = user._doc;
-          res.json({ msj: "Usuario creado correctamente", user: rest, token });
+          res.json({
+            ok: true,
+            msj: "Usuario creado correctamente",
+            user: rest,
+            token,
+          });
         })
         .catch((error) => console.error(error));
     });

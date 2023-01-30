@@ -1,39 +1,16 @@
 import { api } from "./apiBase";
 
-interface authProps {
+export interface authProps {
   email: string;
   password: string;
-}
-
-interface LoginResponse {
-  data: {
-    msj: string | null | undefined;
-    token: string;
-    user: {
-      email: string;
-      password: string;
-      _id: string;
-    };
-  };
+  auth: 'login' | 'register'
 }
 
 const dataLS = JSON.parse(localStorage.getItem("gdi-user")!);
 
-export const login = async ({ email, password }: authProps) => {
+export const authService = async ({ email, password, auth }: authProps) => {
   try {
-    const { data }: LoginResponse = await api.post("/auth/login", {
-      email,
-      password,
-    });
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-export const register = async ({ email, password }: authProps) => {
-  try {
-    const { data }: any = await api.post("/auth/register", {
+    const { data }: any = await api.post(`/auth/${auth}`, {
       email,
       password,
     });
